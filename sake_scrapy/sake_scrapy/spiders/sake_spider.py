@@ -7,12 +7,12 @@ class SakeSpiderSpider(scrapy.Spider):
     allowed_domains = ['niigata-sake.or.jp']
 
     def start_requests(self):
-        url = 'http://niigata-sake.or.jp/kuramoto/index.html'
+        url = 'http://niigata-sake.or.jp/kuramoto'
         yield scrapy.Request(url, callback=self.parse_niigata_area)
 
     def parse(self, response):
 
-        for pos in response.css('.a_type.clearfix dd a'):
+        for pos in response.css('dl.a_type.clearfix dd a'):
 
             # 再帰的にページングを辿るための処理
             older_post_link = pos.css('::attr(href)').extract_first()
@@ -28,8 +28,6 @@ class SakeSpiderSpider(scrapy.Spider):
     def parse_niigata_kuramoto(self, response):
 
         kuramoto = response.css('div.bgg #name::text').extract_first()
-        print('★☆★☆酒造★☆★☆')
-        print(kuramoto)
 
         for pos in response.css('.seihin_box.clearfix .setumei p strong::text'):
             yield SakeScrapyItem(
@@ -40,7 +38,6 @@ class SakeSpiderSpider(scrapy.Spider):
 
     def parse_niigata_area(self, response):
         for pos in response.css('#sideBar ul li a'):
-            print(pos)
             older_post_link = pos.css('::attr(href)').extract_first()
             if older_post_link is None:
                 # リンクが取得できなかった場合は最後のページなので処理を終了
