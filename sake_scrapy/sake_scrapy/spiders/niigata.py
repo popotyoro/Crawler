@@ -3,7 +3,7 @@ import scrapy
 from ..items import SakeScrapyItem
 
 class SakeSpiderSpider(scrapy.Spider):
-    name = 'sake_spider'
+    name = 'niigata'
     allowed_domains = ['niigata-sake.or.jp']
 
     def start_requests(self):
