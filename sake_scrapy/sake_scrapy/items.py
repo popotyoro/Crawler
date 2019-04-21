@@ -9,6 +9,7 @@ import scrapy
 
 
 class SakeScrapyItem(scrapy.Item):
-
-    url = scrapy.Field()
+    prefecture = scrapy.Field()
     kuramoto = scrapy.Field()
+    sake_name = scrapy.Field()
+
